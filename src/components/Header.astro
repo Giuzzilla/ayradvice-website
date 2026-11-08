@@ -1,0 +1,258 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/images/logo-ayr-advice.webp";
+import menuIcon from "../assets/icons/menu.png";
+import Button from "./Button.astro";
+
+const links = [
+	{ href: "/", label: "Home" },
+	{ href: "/chi-sono", label: "Chi sono" },
+	{ href: "/servizi", label: "Servizi" },
+	{ href: "/contatti", label: "Contatti" },
+];
+
+const currentPath = Astro.url.pathname.replace(/(index)?\.html$/, "").replace(/(.)\/$/, "$1");
+const isCurrent = (href: string) => href === currentPath;
+---
+
+<header class="navigation">
+	<div class="navigation-wrap">
+		<a href="/" class="logo-link" aria-current={isCurrent("/") ? "page" : undefined}>
+			<Image
+				src={logo}
+				width={216}
+				widths={[216, 432, 648]}
+				sizes="(max-width: 479px) 100vw, 216px"
+				alt="Logo Aziendale di AYR Advice di Marco Mazzanti"
+				loading="eager"
+			/>
+		</a>
+		<div class="menu">
+			<div class="menu-overlay">
+				<nav class="navigation-items" id="main-menu" aria-label="Menu principale">
+					{links.map(({ href, label }) => (
+						<a href={href} class="navigation-item" aria-current={isCurrent(href) ? "page" : undefined}>
+							{label}
+						</a>
+					))}
+				</nav>
+			</div>
+			<button class="menu-button" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Apri menu">
+				<Image src={menuIcon} width={22} alt="" />
+			</button>
+		</div>
+		<Button href="/contatti" class="contact-button" aria-current={isCurrent("/contatti") ? "page" : undefined}>
+			Contattaci
+		</Button>
+	</div>
+</header>
+
+<script>
+	const button = document.querySelector<HTMLButtonElement>(".menu-button")!;
+	const menu = document.getElementById("main-menu")!;
+
+	const setOpen = (open: boolean) => {
+		button.setAttribute("aria-expanded", String(open));
+		menu.classList.toggle("is-open", open);
+	};
+
+	button.addEventListener("click", () => setOpen(!menu.classList.contains("is-open")));
+	document.addEventListener("click", (event) => {
+		if (!(event.target instanceof Node) || !button.parentElement!.contains(event.target)) setOpen(false);
+	});
+</script>
+
+<style>
+	.navigation {
+		position: relative;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		padding: 30px 50px;
+	}
+
+	.navigation-wrap {
+		position: relative;
+		display: flex;
+		flex: 1;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo-link {
+		position: relative;
+		z-index: 1;
+		padding-left: 10px;
+	}
+
+	.logo-link:hover {
+		opacity: 0.8;
+	}
+
+	.logo-link:active {
+		opacity: 0.7;
+	}
+
+	.menu {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.menu-overlay {
+		display: contents;
+	}
+
+	.navigation-items {
+		display: flex;
+		flex: none;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.navigation-item {
+		display: inline-block;
+		padding: 9px 20px;
+		color: #222;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 20px;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		text-decoration: none;
+		opacity: 0.6;
+	}
+
+	.navigation-item:hover {
+		opacity: 0.9;
+	}
+
+	.navigation-item:active {
+		opacity: 0.8;
+	}
+
+	.navigation-item[aria-current="page"] {
+		color: var(--color-text);
+		font-weight: 600;
+		opacity: 1;
+	}
+
+	.navigation-item[aria-current="page"]:hover {
+		color: var(--color-text-hover);
+		opacity: 0.8;
+	}
+
+	.menu-button {
+		display: none;
+		padding: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+	}
+
+	.navigation-wrap :global(.contact-button) {
+		position: relative;
+		z-index: 5;
+	}
+
+	@media screen and (max-width: 991px) {
+		.navigation {
+			padding: 25px 30px;
+		}
+
+		.navigation-wrap {
+			position: static;
+			background-color: #fff;
+		}
+
+		.menu {
+			position: static;
+			margin-left: 30px;
+		}
+
+		.menu-button {
+			display: block;
+		}
+
+		.menu-overlay {
+			display: block;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.navigation-items {
+			flex-direction: column;
+			align-items: stretch;
+			background-color: #fff;
+			visibility: hidden;
+			transform: translateY(-100%);
+			transition:
+				transform 0.4s ease,
+				visibility 0s 0.4s;
+		}
+
+		.navigation-items.is-open {
+			visibility: visible;
+			transform: none;
+			pointer-events: auto;
+			transition: transform 0.4s ease;
+		}
+
+		.navigation-item {
+			display: block;
+			padding: 15px 30px;
+			text-align: center;
+			transition:
+				background-color 0.4s,
+				opacity 0.4s,
+				color 0.4s;
+		}
+
+		.navigation-item:hover {
+			background-color: #f7f8f9;
+		}
+
+		.navigation-item:active {
+			background-color: #eef0f3;
+		}
+
+		.navigation-wrap :global(.contact-button) {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.navigation-items,
+		.navigation-items.is-open {
+			transition: none;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.navigation {
+			padding: 20px 30px;
+		}
+
+		.logo-link {
+			padding-left: 0;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.navigation {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+
+		.menu {
+			margin-left: 15px;
+		}
+	}
+</style>

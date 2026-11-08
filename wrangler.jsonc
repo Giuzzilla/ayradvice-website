@@ -1,0 +1,20 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "ayradvice-website",
+	"compatibility_date": "2026-08-31",
+	"main": "./worker/index.ts",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "404-page",
+		"run_worker_first": ["/api/*"],
+	},
+	"vars": {
+		"CONTACT_FROM": "sito@website.ayradvice.it",
+	},
+	"secrets": { "required": ["CONTACT_TO", "TURNSTILE_SECRET_KEY"] },
+	"send_email": [{ "name": "EMAIL" }],
+	"workers_dev": true,
+	"routes": [{ "pattern": "www.ayradvice.it", "custom_domain": true }],
+	"observability": { "enabled": true },
+}

@@ -1,0 +1,83 @@
+---
+import Button from "./Button.astro";
+---
+
+<section class="cta">
+	<div class="container">
+		<div class="cta-wrap">
+			<div>
+				<div class="cta-text">
+					<div class="heading-jumbo-small">Are you ready?</div>
+					<div class="paragraph-bigger cta-paragraph">
+						Scopri come la nostra consulenza può trasformare la tua azienda: migliora l'efficienza, abbraccia
+						l'innovazione e raggiungi risultati straordinari!
+					</div>
+				</div>
+				<Button href="/contatti" size="jumbo">
+					Inizia ora
+				</Button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta {
+		padding-left: 80px;
+		padding-right: 80px;
+		background-color: var(--color-muted-bg);
+	}
+
+	.cta-wrap {
+		display: flex;
+		justify-content: center;
+		padding-top: 110px;
+		padding-bottom: 120px;
+		text-align: center;
+	}
+
+	.cta-text {
+		width: 70%;
+		margin: 0 auto 35px;
+	}
+
+	.cta-paragraph {
+		color: #000;
+		opacity: 0.6;
+	}
+
+	@media screen and (max-width: 991px) {
+		.cta {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.cta-wrap {
+			padding: 80px 50px 90px;
+		}
+
+		.cta-text {
+			width: auto;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.cta {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.cta {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.cta-wrap {
+			display: block;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+</style>

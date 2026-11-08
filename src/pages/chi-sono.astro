@@ -1,0 +1,160 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import CallToAction from "../components/CallToAction.astro";
+import SplitRow from "../components/SplitRow.astro";
+import { experiences } from "../data/experiences";
+import portrait from "../assets/images/marco-mazzanti-foto.webp";
+import conference from "../assets/images/marco-mazzanti-conferenza.webp";
+import speech from "../assets/images/marco-mazzanti-speech.webp";
+---
+
+<Base title="Chi sono | AYR Advice di Marco Mazzanti">
+	<section class="bio">
+		<div class="bio-text">
+			<h1>Marco Mazzanti</h1>
+			<p>
+				La mia esperienza deriva da un periodo come imprenditore per poi approdare in aziende strutturate a livello
+				nazionale e internazionale.
+				<br />
+				Per 30 anni ho lavorato presso aziende leader nel settore retail con dimensioni decisamente importanti (3bln di
+				fatturato e oltre 5.000 dipendenti). Ho iniziato da ruoli operativi in Punto Vendita fino a C-level con presenza
+				nel consiglio di amministrazione.
+				<br />
+				Questo mi ha dato la possibilità di conoscere tutti gli aspetti organizzativi e strutturali dell’azienda dandomi
+				un’esperienza a 360° ma partendo sempre dal cliente finale.
+			</p>
+		</div>
+		<Image src={portrait} height={500} densities={[1, 2]} alt="Foto ritratto di Marco Mazzanti" class="bio-photo" />
+	</section>
+
+	<section class="competences">
+		<SplitRow
+			title="Competenza Multidimensionale"
+			image={conference}
+			alt="Foto di Marco Mazzanti in conferenza"
+			imageFirst
+		>
+			La mia esperienza mi consente di comprendere e gestire ogni aspetto del tuo business, a livello strategico e
+			organizzativo. Inoltre, ho competenze approfondite in settori chiave come gestione commerciale, marketing,
+			organizzazione, logistica e risorse umane. Questo significa che sono pronto a offrire soluzioni dettagliate e su
+			misura per i tuoi problemi specifici.
+		</SplitRow>
+		<div class="competences-divider"></div>
+		<SplitRow title="Accesso a eccellenze manageriali" image={speech} alt="Foto di Marco Mazzanti in conferenza">
+			Ho avuto il privilegio di lavorare con alcuni dei manager più innovativi e importanti a livello mondiale. Queste
+			collaborazioni mi hanno fornito una prospettiva unica e competenze difficili da trovare altrove e, cosa più
+			importante, posso metterle a tua disposizione a costi accessibili, il tutto in modo molto molto pragmatico.
+		</SplitRow>
+	</section>
+
+	<section class="experiences">
+		<h2 class="experiences-heading">Le mie esperienze</h2>
+		<div class="experiences-list">
+			{experiences.map(({ company, place, period, lines }) => (
+				<article>
+					<h3 class="experience-title">{company}</h3>
+					<div class="experience-subtitle">
+						{place} {period}
+					</div>
+					<p>
+						{lines.map((line, i) => (
+							<>
+								{i > 0 && <br />}
+								{line}
+							</>
+						))}
+					</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<CallToAction />
+</Base>
+
+<style>
+	.bio {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 50px;
+		margin: 0 60px;
+	}
+
+	.bio-text {
+		max-width: 800px;
+	}
+
+	.bio-photo {
+		width: auto;
+		max-height: 500px;
+	}
+
+	.competences,
+	.experiences {
+		padding: 80px 30px;
+		border-bottom: 1px solid var(--color-border);
+		background-color: var(--color-soft-bg);
+	}
+
+	.competences-divider {
+		height: 1px;
+		margin: 40px 0;
+		background-color: var(--color-border);
+	}
+
+	.experiences {
+		margin-bottom: 0;
+	}
+
+	.experiences-heading {
+		margin-bottom: 16px;
+		text-align: center;
+	}
+
+	.experiences-list {
+		display: flow-root;
+		max-width: 940px;
+		margin: 0 auto;
+	}
+
+	.experience-title {
+		margin-top: 20px;
+		margin-bottom: 15px;
+		font-size: 44px;
+		font-weight: 400;
+		line-height: 62px;
+	}
+
+	.experience-subtitle {
+		margin-top: -10px;
+		margin-bottom: 10px;
+		font-weight: 200;
+	}
+
+	@media screen and (max-width: 991px) {
+		.experiences-list {
+			max-width: 728px;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.competences,
+		.experiences {
+			padding: 60px 15px;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.experiences-heading {
+			margin-bottom: 24px;
+		}
+
+		.experience-title {
+			font-size: 36px;
+			line-height: 52px;
+		}
+	}
+</style>

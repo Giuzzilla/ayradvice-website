@@ -1,0 +1,78 @@
+---
+interface Props {
+	href?: string;
+	type?: "button" | "submit";
+	size?: "default" | "jumbo";
+	variant?: "dark" | "light";
+	class?: string;
+}
+
+const { href, type = "button", size = "default", variant = "dark", class: className, ...rest } = Astro.props;
+const classes = ["button", `button--${size}`, `button--${variant}`, className];
+---
+
+{href ? (
+	<a href={href} class:list={classes} {...rest}>
+		<slot />
+	</a>
+) : (
+	<button type={type} class:list={classes} {...rest}>
+		<slot />
+	</button>
+)}
+
+<style>
+	.button {
+		display: inline-block;
+		max-width: 100%;
+		padding: 12px 25px;
+		border: 0;
+		border-radius: 0;
+		background-color: var(--color-text);
+		color: #fff;
+		font-size: 12px;
+		line-height: 20px;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		text-decoration: none;
+		cursor: pointer;
+		transition:
+			background-color 0.4s,
+			opacity 0.4s,
+			color 0.4s;
+	}
+
+	.button:hover {
+		background-color: var(--color-text-hover);
+		color: #fff;
+	}
+
+	.button:active {
+		background-color: var(--color-text-active);
+	}
+
+	.button:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+
+	.button--jumbo {
+		padding: 16px 35px;
+		font-size: 14px;
+		line-height: 26px;
+	}
+
+	.button--light {
+		background-color: #fff;
+		color: #000;
+	}
+
+	.button--light:hover {
+		background-color: #f1f1f1;
+		color: #000;
+	}
+
+	.button--light:active {
+		background-color: #e1e1e1;
+	}
+</style>

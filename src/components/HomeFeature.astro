@@ -1,0 +1,66 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+	label: string;
+	title: string;
+	href: string;
+	cta: string;
+	imageFirst?: boolean;
+}
+
+const { label, title, href, cta, imageFirst = false } = Astro.props;
+---
+
+<div class:list={["feature", { "feature--image-first": imageFirst }]}>
+	<div class="feature-text">
+		<div class="feature-copy">
+			<div class="label label--light">{label}</div>
+			<h2 class="feature-title">{title}</h2>
+			<p class="text-light">
+				<slot />
+			</p>
+		</div>
+		<Button href={href}>{cta}</Button>
+	</div>
+	<div class="feature-image">
+		<slot name="image" />
+	</div>
+</div>
+
+<style>
+	.feature {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 30px 80px;
+		align-items: center;
+		margin-bottom: 80px;
+	}
+
+	.feature--image-first .feature-image {
+		order: -1;
+	}
+
+	.feature-copy {
+		margin-bottom: 30px;
+	}
+
+	.feature-title {
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+
+	@media screen and (max-width: 991px) {
+		.feature {
+			grid-template-columns: 1fr;
+			row-gap: 50px;
+			text-align: center;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.feature-title {
+			font-size: 30px;
+		}
+	}
+</style>

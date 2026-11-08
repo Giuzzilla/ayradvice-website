@@ -1,0 +1,193 @@
+---
+import { PUBLIC_TURNSTILE_SITE_KEY } from "astro:env/client";
+import Button from "./Button.astro";
+---
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="contact-form">
+	<form id="contact-form" action="/api/contact" method="post">
+		<label for="name">Nome</label>
+		<input
+			class="text-field"
+			id="name"
+			name="name"
+			type="text"
+			maxlength="256"
+			autocomplete="name"
+			placeholder="Inserisci il tuo nome e cognome"
+		/>
+
+		<label for="email">Indirizzo email</label>
+		<input
+			class="text-field"
+			id="email"
+			name="email"
+			type="email"
+			maxlength="256"
+			autocomplete="email"
+			placeholder="Inserisci la tua email"
+			required
+		/>
+
+		<label for="phone">Numero di telefono (opzionale)</label>
+		<input
+			class="text-field"
+			id="phone"
+			name="phone"
+			type="tel"
+			maxlength="256"
+			autocomplete="tel"
+			placeholder="Inserisci il tuo numero di telefono o cellulare"
+		/>
+
+		<label for="message">Messaggio</label>
+		<textarea
+			class="text-field text-field--textarea"
+			id="message"
+			name="message"
+			maxlength="5000"
+			placeholder="Ciao, ti contatto perché ho un'azienda in ... e vorrei iniziare a collaborare con voi"
+		></textarea>
+
+		<div class="honeypot" aria-hidden="true">
+			<label for="website">Website</label>
+			<input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+		</div>
+
+		<div class="cf-turnstile turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-language="it"></div>
+
+		<Button type="submit">Entra in contatto</Button>
+	</form>
+
+	<div class="status-message status-message--success" id="contact-success" role="status" hidden>
+		Grazie! La tua richiesta è stata inviata e ti contatteremo a breve
+	</div>
+	<div class="status-message status-message--error" id="contact-error" role="alert" hidden>
+		Si è verificato un errore nell'invio del form. Riprova più tardi.
+	</div>
+</div>
+
+<script>
+	const form = document.getElementById("contact-form") as HTMLFormElement;
+	const submit = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
+	const success = document.getElementById("contact-success")!;
+	const error = document.getElementById("contact-error")!;
+
+	form.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		const label = submit.textContent;
+		submit.disabled = true;
+		submit.textContent = "Attendi...";
+		error.hidden = true;
+
+		try {
+			const response = await fetch(form.action, {
+				method: "POST",
+				body: new FormData(form),
+				headers: { Accept: "application/json" },
+			});
+			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			form.hidden = true;
+			success.hidden = false;
+		} catch {
+			error.hidden = false;
+			window.turnstile?.reset();
+		} finally {
+			submit.disabled = false;
+			submit.textContent = label;
+		}
+	});
+
+	declare global {
+		interface Window {
+			turnstile?: { reset: () => void };
+		}
+	}
+</script>
+
+<style>
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin: 0 auto;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.text-field {
+		display: block;
+		width: 100%;
+		margin-bottom: 25px;
+		padding: 21px 20px;
+		border: 1px solid #e4e4e4;
+		border-radius: 0;
+		background-color: #fff;
+		color: #333;
+		font-size: 14px;
+		line-height: 26px;
+		transition: border-color 0.4s;
+	}
+
+	input.text-field {
+		height: 38px;
+	}
+
+	.text-field:hover {
+		border-color: #e3e6eb;
+	}
+
+	.text-field:focus {
+		border-color: var(--color-text-active);
+		outline: 0;
+	}
+
+	.text-field::placeholder {
+		color: rgba(50, 52, 58, 0.4);
+	}
+
+	.text-field--textarea {
+		height: 200px;
+		padding-top: 12px;
+		resize: vertical;
+	}
+
+	.honeypot {
+		position: absolute;
+		left: -10000px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	.turnstile {
+		margin-bottom: 25px;
+	}
+
+	.status-message {
+		padding: 9px 30px;
+		color: #fff;
+		font-size: 14px;
+		line-height: 26px;
+		text-align: center;
+	}
+
+	.status-message--success {
+		background-color: #12b878;
+	}
+
+	.status-message--error {
+		margin-top: 10px;
+		background-color: #db4b68;
+	}
+
+	@media screen and (max-width: 991px) {
+		form {
+			text-align: left;
+		}
+	}
+</style>

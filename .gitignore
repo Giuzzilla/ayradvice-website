@@ -1,0 +1,22 @@
+# build output
+dist/
+# generated types
+.astro/
+worker/worker-configuration.d.ts
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+
+# environment variables / local secrets
+.env
+.dev.vars
+
+# macOS-specific files
+.DS_Store
+
+# wrangler local state
+.wrangler/

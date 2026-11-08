@@ -1,0 +1,147 @@
+---
+import { Image, getImage } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import CallToAction from "../components/CallToAction.astro";
+import HomeFeature from "../components/HomeFeature.astro";
+import cover from "../assets/images/cover-marco-mazzanti.webp";
+import portrait from "../assets/images/marco-mazzanti-foto.webp";
+import logoFull from "../assets/images/ayr-advice-logo-completo.webp";
+
+const coverImage = await getImage({ src: cover, format: "webp" });
+---
+
+<Base>
+	<section class="hero" style={`--cover: url(${coverImage.src})`}>
+		<div class="hero-content">
+			<div class="hero-text">
+				<h1 class="heading-jumbo">Oltre 30 Anni di Successo al Servizio della Tua Azienda</h1>
+				<div class="paragraph-bigger text-light">
+					Sei pronto a cambiare e a unire alle tue capacità di imprenditore le capacità organizzative di una grande
+					multinazionale?
+				</div>
+			</div>
+			<Button href="/servizi" size="jumbo" variant="light">
+				Scopri di più
+			</Button>
+		</div>
+	</section>
+
+	<div class="container">
+		<div class="motto">
+			<div class="label label--light">Il nostro metodo</div>
+			<div class="heading-jumbo-small">
+				Consulenza pragmatica, digitale e innovativa per un approccio manageriale orientato al risultato
+			</div>
+		</div>
+
+		<div class="divider"></div>
+
+		<div class="home-content">
+			<HomeFeature label="Chi sono" title="MARCO MAZZANTI" href="/chi-sono" cta="La mia esperienza">
+				Dopo decenni di esperienza come manager ad alti livelli, ho deciso di canalizzare la mia passione e competenza
+				per aiutare le aziende a diventare più manageriali, organizzate e a capitalizzare appieno le opportunità offerte
+				dalla digitalizzazione e dalle innovazioni di mercato.
+				<Image
+					slot="image"
+					src={portrait}
+					width={1080}
+					widths={[500, 800, 1080, 1600]}
+					sizes="(max-width: 991px) 60vw, 530px"
+					alt="Foto ritratto di Marco Mazzanti"
+					class="portrait"
+				/>
+			</HomeFeature>
+
+			<HomeFeature label="I nostri servizi" title="SERVIZI" href="/servizi" cta="Scopri di più" imageFirst>
+				Sei alla ricerca di un consulente che parli il linguaggio dei risultati concreti e del successo aziendale? La
+				mia esperienza di oltre 30 anni fino a ruoli C-level all'interno di grandi aziende multinazionali e nazionali mi
+				ha permesso di acquisire competenze di alto livello in gestione, strategia, organizzazione e molto altro. Sono
+				qui per condividere questa competenza con te e la tua azienda.
+				<Image
+					slot="image"
+					src={logoFull}
+					width={1080}
+					widths={[500, 800, 1080, 1600]}
+					sizes="(max-width: 991px) 75vw, 530px"
+					alt="Logo completo di AYR Advice di Marco Mazzanti. Sottotitolo: Concreti & Innovativi"
+					class="logo-full"
+				/>
+			</HomeFeature>
+		</div>
+	</div>
+
+	<CallToAction />
+</Base>
+
+<style>
+	.hero {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 620px;
+		margin-bottom: 100px;
+		background-color: var(--color-muted-bg);
+		background-image: var(--cover);
+		background-position: 10% 0;
+		background-size: cover;
+		color: #fff;
+	}
+
+	.hero-content {
+		width: 70%;
+		max-width: 940px;
+		margin-bottom: 20px;
+		text-align: center;
+	}
+
+	.hero-text {
+		width: 90%;
+		margin: 0 auto 35px;
+	}
+
+	.motto {
+		width: 80%;
+		margin: 0 auto 85px;
+		text-align: center;
+	}
+
+	.home-content {
+		margin-top: 80px;
+		margin-bottom: 120px;
+	}
+
+	.portrait {
+		border-radius: 400px;
+	}
+
+	@media screen and (max-width: 991px) {
+		.hero {
+			background-position: 65% 0;
+		}
+
+		.hero-text {
+			width: auto;
+		}
+
+		.portrait {
+			max-width: 60%;
+			margin: 0 auto;
+		}
+
+		.logo-full {
+			max-width: 75%;
+			margin: 0 auto;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.hero {
+			background-position: 65%;
+		}
+
+		.hero-content {
+			width: 80%;
+		}
+	}
+</style>

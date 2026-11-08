@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import ContactForm from "../components/ContactForm.astro";
+---
+
+<Base title="Contatti | AYR Advice di Marco Mazzanti">
+	<section class="container">
+		<div class="contact">
+			<div class="contact-intro">
+				<h1 class="contact-heading">Contattaci ora!</h1>
+				<div class="text-light">
+					Scrivici per iniziare ad esplorare insieme come migliorare la tua struttura aziendale e la tua strategia con i
+					consigli di un esperto con più di 30 anni di esperienza da Manager in multinazionali.
+				</div>
+			</div>
+			<ContactForm />
+		</div>
+	</section>
+</Base>
+
+<style>
+	.contact {
+		padding: 45px 50px 50px;
+		border: 1px solid var(--color-divider);
+	}
+
+	.contact-intro {
+		margin-bottom: 40px;
+	}
+
+	.contact-heading {
+		margin-top: 0;
+		margin-bottom: 15px;
+		font-size: 36px;
+		line-height: 50px;
+	}
+
+	@media screen and (max-width: 767px) {
+		.contact {
+			padding: 30px;
+		}
+	}
+</style>

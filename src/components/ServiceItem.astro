@@ -1,0 +1,38 @@
+---
+import type { Service } from "../data/services";
+
+type Props = Service;
+
+const { title, icon, items } = Astro.props;
+---
+
+<div class="service">
+	<img src={icon.src} width="50" height="50" alt="" class="service-icon" />
+	<h3 class="paragraph-bigger service-title">{title}</h3>
+	<ul class="service-list">
+		{items.map((item) => (
+			<li>{item}</li>
+		))}
+	</ul>
+</div>
+
+<style>
+	.service-icon {
+		margin: 0 auto 30px;
+	}
+
+	.service-title {
+		margin-top: 0;
+	}
+
+	.service-list {
+		font-weight: 300;
+	}
+
+	@media screen and (max-width: 991px) {
+		.service-icon {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+</style>

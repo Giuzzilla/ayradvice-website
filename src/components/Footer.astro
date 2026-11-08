@@ -1,0 +1,71 @@
+---
+import linkedinIcon from "../assets/icons/linkedin.svg";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+	<div class="footer-bottom">
+		<div class="footer-copyright">
+			Partita IVA: IT04709380168
+			<br />© {year} AYR Advice di Marco Mazzanti
+		</div>
+		<a href="https://www.linkedin.com/company/ayradvice" target="_blank" rel="noopener" class="footer-social-link">
+			<img src={linkedinIcon.src} width="35" height="35" loading="lazy" alt="Link alla pagina LinkedIn di AYR Advice" />
+		</a>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		padding: 40px 30px;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.footer-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 1080px;
+		margin: 0 auto;
+	}
+
+	.footer-copyright {
+		color: #3a4554;
+	}
+
+	@media screen and (max-width: 991px) {
+		.footer-bottom {
+			max-width: 728px;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.footer {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+
+		.footer-bottom {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.footer-copyright {
+			font-size: 14px;
+			line-height: 20px;
+		}
+
+		.footer-social-link {
+			margin-top: 20px;
+			margin-left: 8px;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.footer-bottom {
+			align-items: center;
+			max-width: none;
+		}
+	}
+</style>

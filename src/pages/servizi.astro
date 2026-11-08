@@ -1,0 +1,201 @@
+---
+import Base from "../layouts/Base.astro";
+import CallToAction from "../components/CallToAction.astro";
+import ServiceItem from "../components/ServiceItem.astro";
+import { highlights, services } from "../data/services";
+---
+
+<Base title="Servizi | AYR Advice di Marco Mazzanti">
+	<section class="intro">
+		<div class="narrow">
+			<h1 class="heading-jumbo-small">Migliora la tua Azienda con un Consulente di Alto Livello</h1>
+			<p class="text-light">
+				<em>
+					Sei alla ricerca di un consulente che parli il linguaggio dei risultati concreti e del successo aziendale? La
+					mia esperienza di oltre 30 anni in ruoli di C-level all'interno di grandi aziende multinazionali e nazionali
+					mi ha permesso di acquisire competenze di alto livello in gestione, strategia, organizzazione e molto altro.
+					Sono qui per condividere questa competenza con te e la tua azienda.
+				</em>
+			</p>
+		</div>
+	</section>
+
+	<section class="highlights">
+		<div class="highlights-grid">
+			{highlights.map(({ title, text, featured }) => (
+				<div class:list={["highlight", { "highlight--featured": featured }]}>
+					<h2 class="highlight-title">{title}</h2>
+					<p>{text}</p>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<section class="network">
+		<div class="narrow">
+			<h2 class="network-title">Competenza Condivisa, Soluzioni Uniche</h2>
+			<p class="network-text">
+				Per fornire consulenze di altissima qualità in un'ampia gamma di servizi collaboro con una rete attentamente
+				selezionata di professionisti esperti in specifici settori. Ogni consulente è scelto per la sua comprovata
+				esperienza e per l'eccezionale competenza nel proprio campo, garantendo così un servizio completo e di alto
+				livello in ogni area di consulenza offerta, chiaramente il tutto offerto sotto la mia supervisione e
+				responsabilità.
+			</p>
+		</div>
+	</section>
+
+	<section class="container">
+		<div class="services-heading">
+			<div class="label label--light">
+				Scopri quello che
+				<br />
+				possiamo fare per te
+			</div>
+			<h2>I nostri servizi</h2>
+		</div>
+		<div class="services-grid">
+			{services.map((service) => (
+				<ServiceItem {...service} />
+			))}
+		</div>
+	</section>
+
+	<CallToAction />
+</Base>
+
+<style>
+	.narrow {
+		display: flow-root;
+		max-width: 940px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.intro {
+		margin: 20px 60px 60px;
+	}
+
+	.highlights {
+		padding: 80px 30px;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.highlights-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 50px 60px;
+		align-items: center;
+		max-width: 1080px;
+		margin: 0 auto;
+	}
+
+	.highlight {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 32px 24px;
+		background-color: #fff;
+		box-shadow: 0 4px 130px rgba(150, 163, 181, 0.12);
+	}
+
+	.highlight--featured {
+		z-index: 2;
+		box-shadow: 0 4px 130px rgba(150, 163, 181, 0.3);
+	}
+
+	.highlight-title {
+		margin-top: 10px;
+		margin-bottom: 8px;
+		font-size: 40px;
+		font-weight: 500;
+		line-height: 48px;
+		text-align: center;
+	}
+
+	.network {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.network-title {
+		margin-top: 40px;
+		margin-bottom: 15px;
+		font-size: 44px;
+		line-height: 62px;
+	}
+
+	.network-text {
+		margin-bottom: 40px;
+	}
+
+	.services-heading {
+		margin: 80px 0;
+		text-align: center;
+	}
+
+	.services-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 60px 80px;
+		margin-bottom: 120px;
+	}
+
+	@media screen and (max-width: 991px) {
+		.narrow {
+			max-width: 728px;
+		}
+
+		.highlights-grid {
+			grid-template-columns: 1fr;
+			justify-items: center;
+			max-width: 728px;
+		}
+
+		.highlight {
+			width: 350px;
+		}
+
+		.services-grid {
+			grid-template-columns: 1fr 1fr;
+			width: 80%;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.highlights {
+			padding: 60px 15px;
+		}
+
+		.highlights-grid {
+			justify-items: stretch;
+		}
+
+		.highlight {
+			width: auto;
+		}
+
+		.highlight-title {
+			font-size: 34px;
+			line-height: 42px;
+		}
+
+		.services-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media screen and (max-width: 479px) {
+		.highlights-grid,
+		.narrow {
+			max-width: none;
+		}
+
+		.network-title {
+			font-size: 36px;
+			line-height: 52px;
+		}
+	}
+</style>
